@@ -1,0 +1,485 @@
+/* CFB Prediction Lab Report - OSU vs Texas Journey */
+:root {
+    --osu-red: #ba0c2f;
+    --osu-gray: #a7b1b7;
+    --texas-orange: #bf5700;
+    --texas-gray: #333f48;
+    --success-green: #28a745;
+    --warning-yellow: #ffc107;
+    --danger-red: #dc3545;
+    --info-blue: #17a2b8;
+    --dark-bg: #1a1a1a;
+    --light-bg: #f8f9fa;
+    --gradient-start: #ba0c2f;
+    --gradient-end: #bf5700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    background: linear-gradient(135deg, var(--light-bg) 0%, #e9ecef 100%);
+}
+
+/* Header Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.game-matchup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 2rem 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.team-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.osu-logo {
+    background: var(--osu-red);
+    color: white;
+}
+
+.texas-logo {
+    background: var(--texas-orange);
+    color: white;
+}
+
+/* Content Sections */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.section {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--osu-red);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--osu-red), var(--texas-orange));
+    border-radius: 2px;
+}
+
+.section-description {
+    font-size: 1.2rem;
+    color: #34495e;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Journey Timeline */
+.journey-timeline {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--osu-red), var(--texas-orange));
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-content {
+    flex: 1;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 0 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+
+
+
+
+.timeline-step {
+    color: var(--osu-red);
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timeline-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.timeline-description {
+    color: #34495e;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Metrics and Charts */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.metric-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    border-top: 3px solid var(--osu-red);
+}
+
+
+
+.metric-value {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--osu-red);
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    color: #34495e;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.metric-change {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.metric-change.positive {
+    background: #d4edda;
+    color: var(--success-green);
+}
+
+.metric-change.negative {
+    background: #f8d7da;
+    color: var(--danger-red);
+}
+
+/* Code Blocks */
+.code-block {
+    background: var(--dark-bg);
+    color: #f8f8f2;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    overflow-x: auto;
+    position: relative;
+}
+
+.code-block::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    background: var(--osu-red);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.code-highlight {
+    background: rgba(187, 0, 0, 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+}
+
+/* Comparison Tables */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1rem;
+    text-align: center;
+}
+
+.comparison-table th {
+    background: var(--osu-red);
+    color: white;
+    font-weight: bold;
+}
+
+.comparison-table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+
+
+.improvement-cell {
+    font-weight: bold;
+}
+
+.improvement-cell.positive {
+    color: var(--success-green);
+}
+
+.improvement-cell.negative {
+    color: var(--danger-red);
+}
+
+/* Chart Containers */
+.chart-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 2rem 0;
+}
+
+.chart-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--osu-red);
+    margin-bottom: 2rem;
+}
+
+/* SVG Diagrams */
+.diagram-container {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.diagram-svg {
+    max-width: 100%;
+    height: auto;
+    drop-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Interactive Elements */
+.interactive-button {
+    background: linear-gradient(135deg, var(--osu-red), #cc1111);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0.5rem;
+}
+
+
+
+.toggle-content {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.toggle-content.active {
+    max-height: 1000px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .game-matchup {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .timeline-item {
+        flex-direction: column !important;
+    }
+    
+    .timeline-content {
+        margin: 1rem 0;
+    }
+    
+    .timeline-line {
+        display: none;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+
+
+.animate-on-scroll {
+    opacity: 1;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+}
+
+/* Footer */
+.footer {
+    background: var(--dark-bg);
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--osu-red);
+}
+
+/* Mermaid Diagram Styling */
+.mermaid {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Scenario Selector Styling */
+.scenario-btn {
+    opacity: 0.7;
+}
+
+.scenario-btn:hover {
+    opacity: 1;
+}
+
+.scenario-btn.active {
+    opacity: 1;
+}
+
+.scenario-panel {
+    display: none;
+}
+
+.scenario-panel.active {
+    display: block;
+}
+
+/* Special Effects */
+.glow-effect {
+    box-shadow: 0 0 20px rgba(187, 0, 0, 0.3);
+}
+
+

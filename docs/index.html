@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFB Prediction Lab: The Ohio State vs Texas Journey</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">🏈 The Prediction Lab Journey</h1>
+            <p class="hero-subtitle">Saturday 12:00PM can't get here fast enough, here is how I spent my week passing the time  ps) it helped that I was triying to use up my API calls before the end of the month</p>
+            
+            <div class="game-matchup">
+                <div class="team-logo osu-logo">OSU</div>
+                <div style="font-size: 1.5rem; color: rgba(255,255,255,0.8);">vs</div>
+                <div class="team-logo texas-logo">TEX</div>
+            </div>
+            
+            <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.9;">
+                <strong>The Game:</strong> 2025 Season Opener • <strong>Date:</strong> August 30, 2025, 12:00 PM EST<br>
+                <strong>Location:</strong> Ohio Stadium, Columbus, Ohio • <strong>Forecast:</strong> 75°F, Partly Sunny<br>
+                <strong>The Challenge:</strong> Build the most accurate prediction system possible without biasing to Vegas<br>
+                <strong>The Discovery:</strong> Aggregate talent metrics are fundamentally flawed
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Introduction Section -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Setup</h2>
+                <p class="section-description">
+                    It's late August 2025, and I'm getting antsy waiting for kickoff. Ohio State hosts Texas on Saturday at noon - the season opener we've all been waiting for. 
+                    Instead of just doom-scrolling Twitter for the hundredth time, I figured I'd build a prediction model to see what the data actually says about this game. 
+                    No peeking at Vegas lines, no bias toward my beloved Buckeyes - just pure historical data and see where it leads.
+                </p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; border-left: 4px solid var(--osu-red);">
+                <h3 style="color: var(--osu-red); margin-bottom: 1rem;">📋 The Initial Challenge</h3>
+                <p><strong>Goal:</strong> Test what a model trained purely on historical data would predict</p>
+                <p><strong>Resources:</strong> CFBD API, 847 historical games, individual player data, current rosters, ML models</p>
+                <p><strong>Timeline:</strong> August 2025 - weeks before season opener kickoff</p>
+                <p><strong>Expected:</strong> The model would likely be wrong, but wanted to see how wrong and why</p>
+                <p><strong>Context:</strong> Historical data from previous OSU-Texas meetings, including their recent CFP semifinal</p>
+            </div>
+        </section>
+
+        <!-- The Journey Timeline -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">The Discovery Journey</h2>
+                <p class="section-description">
+                    What started as a way to kill time before Saturday became a deep dive into why most talent rankings are completely wrong. 
+                    Here's how I went from a wildly wrong prediction to something that actually makes sense.
+                </p>
+            </div>
+
+            <div class="journey-timeline">
+                <div class="timeline-line"></div>
+
+                <!-- Week 1: Building the Model -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 1: Building the Model</div>
+                        <h3 class="timeline-title">🔧 The "Standard" Approach</h3>
+                        <p class="timeline-description">
+                            Started with what seemed like a solid foundation - grabbed 847 historical games from the CFBD API, 
+                            pulled in all the fancy metrics everyone uses: EPA per play, S&P+ ratings, recruiting composites. 
+                            Built a Random Forest model with 19 features. Nothing too crazy, just good old-fashioned data science.
+                        </p>
+                        
+                        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                            <h4 style="color: var(--osu-red); margin-bottom: 1rem;">🔍 What I Built:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">Data Sources:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• 847 historical games (2019-2024)</li>
+                                        <li>• EPA per play (offense/defense)</li>
+                                        <li>• S&P+ efficiency ratings</li>
+                                        <li>• 4-year talent composites</li>
+                                        <li>• Recent performance metrics</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">Model Setup:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• Random Forest ensemble</li>
+                                        <li>• 19 engineered features</li>
+                                        <li>• Temporal cross-validation</li>
+                                        <li>• Point spread prediction</li>
+                                        <li>• No Vegas line peeking</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-language="python">
+<span class="code-highlight"># The "Standard" Feature Set</span>
+features = [
+    'team_talent_composite_4yr',
+    'opponent_talent_composite_4yr', 
+    'team_sp_rating',
+    'opponent_sp_rating',
+    'team_epa_per_play_offense',
+    'team_epa_per_play_defense',
+    'recent_performance_rating',
+    'home_field_advantage',
+    # ... 11 more "standard" features
+]
+
+# Train on historical data, predict OSU vs Texas
+model = RandomForestRegressor(n_estimators=100)
+model.fit(X_train, y_train)
+prediction = model.predict(osu_vs_texas_features)
+                        </div>
+                        
+                        <p><strong>The Expectation:</strong> Figured this would give me a reasonable prediction. All the fancy metrics, solid methodology, plenty of historical data. What could go wrong?</p>
+                    </div>
+                </div>
+
+                <!-- Week 1 Results: The Shocking Outcome -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 1: Results</div>
+                        <h3 class="timeline-title">🚨 The Shocking Prediction</h3>
+                        <p class="timeline-description">
+                            Hit "run" and waited for my reasonable prediction. Instead, the model spits out <strong>Ohio State -15.8 points</strong>. 
+                            Wait, what? That's not a close game, that's a blowout. Time for some reality checking.
+                        </p>
+                        
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">-15.8</div>
+                                <div class="metric-label">Initial Prediction</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">-2.5</div>
+                                <div class="metric-label">Vegas Line</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">13.3</div>
+                                <div class="metric-label">Points Off Market</div>
+                                <div class="metric-change negative">Way too high!</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #f8d7da; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--danger-red);">
+                            <p><strong>Reality Check:</strong> Vegas had OSU favored by 2.5 points. I was off by 13+ points! That's not just wrong, that's embarrassingly broken. Time to figure out what went sideways.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 2: Diagnosing the Problem -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 2: Diagnosing the Problem</div>
+                        <h3 class="timeline-title">🔍 Why Was It So Wrong?</h3>
+                        <p class="timeline-description">
+                            Okay, the OSU bias wasn't shocking - the model was drunk on our playoff run and recent dominance. 
+                            But I needed to figure out exactly what was causing such a massive systematic error. Time to dig into the feature importance.
+                        </p>
+                        
+                        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                            <h4 style="color: var(--osu-red); margin-bottom: 1rem;">🕵️ The Investigation Process:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">Feature Importance Analysis:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• 4-year talent composite: <strong>68.2%</strong></li>
+                                        <li>• S&P+ efficiency: 18.1%</li>
+                                        <li>• Recent performance: 7.3%</li>
+                                        <li>• EPA per play: 6.4%</li>
+                                        <li>• Everything else: minimal</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">The Problem:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• Model obsessed with talent composite</li>
+                                        <li>• All positions weighted equally</li>
+                                        <li>• Punter = QB in importance</li>
+                                        <li>• Obviously wrong approach</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-title">Problem Identification Flow</div>
+                            <div class="mermaid">
+graph TD
+    A["Initial Model: OSU -15.8"] --> B["Vegas Reality: OSU -2.5"]
+    B --> C["13.3 Point Error"]
+    C --> D["Feature Importance Analysis"]
+    D --> E["68.2% weight on talent composite"]
+    E --> F["All positions treated equally"]
+    F --> G["Obvious flaw identified"]
+    G --> H["Next step: Position weighting"]
+    
+    style A fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    style C fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    style E fill:#ffffcc,stroke:#ff9900,stroke-width:2px
+    style H fill:#ccffcc,stroke:#00aa00,stroke-width:2px
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 2 Results: The Obvious Solution -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 2: The Obvious Solution</div>
+                        <h3 class="timeline-title">🤔 "We Knew This Would Happen"</h3>
+                        <p class="timeline-description">
+                            The diagnosis was clear: why should a punter's recruiting rating matter as much as the quarterback's? 
+                            The solution was obvious - weight positions by their actual importance to winning games.
+                        </p>
+                        
+                        <div class="code-block" data-language="insight">
+<span class="code-highlight">Expected OSU Bias Sources:</span>
+• Red-hot playoff run momentum (as expected)
+• Championship-level recent performance 
+• Historical success weighted heavily
+• Aggregate talent: OSU +44.7 points advantage
+• All positions treated equally (obviously wrong)
+
+<span class="code-highlight">The Vegas Reality Check:</span>
+Market: OSU -2.5 (essentially even game)
+Model: OSU -15.8 (blowout prediction)
+Error: 13.3 points (exactly the bias we expected)
+                        </div>
+                        
+                        <p><strong>The Plan:</strong> Knew the OSU bias was coming from recent dominance. Next step: get individual player data, weight by position importance, and see the real talent picture.</p>
+                    </div>
+                </div>
+
+                <!-- Week 3: Building Position-Weighted System -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 3: Building Position-Weighted System</div>
+                        <h3 class="timeline-title">⚖️ Weighting Positions Properly</h3>
+                        <p class="timeline-description">
+                            Time to build this right. Researched how much each position actually impacts winning, 
+                            collected individual player ratings for both teams, and built a proper weighting framework.
+                        </p>
+                        
+                        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                            <h4 style="color: var(--osu-red); margin-bottom: 1rem;">🏗️ Building the Position Framework:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">Position Weights (Research-Based):</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• QB: <strong>25%</strong> (highest single impact)</li>
+                                        <li>• OL: <strong>20%</strong> (5 players, protection)</li>
+                                        <li>• DL: <strong>15%</strong> (pass rush critical)</li>
+                                        <li>• WR/CB: <strong>12%</strong> each (skill battles)</li>
+                                        <li>• RB/LB/S: <strong>8%</strong> each</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">Data Collection:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• Individual 247 ratings for all players</li>
+                                        <li>• Depth chart analysis (starters vs backups)</li>
+                                        <li>• 70% starter weight, 30% backup weight</li>
+                                        <li>• Both OSU and Texas rosters</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-title">Position-Weighted Analysis Implementation</div>
+                            <div class="mermaid">
+graph TD
+    A["Individual Player Ratings"] --> B["Position Classification"]
+    B --> C["Starter/Backup Designation"]
+    C --> D["Position Weight Assignment"]
+    
+    D --> E["QB: 25% weight"]
+    D --> F["OL: 20% weight"]
+    D --> G["DL: 15% weight"]
+    D --> H["WR/CB: 12% each"]
+    D --> I["RB/LB/S: 8% each"]
+    
+    E --> J["Weighted Team Score"]
+    F --> J
+    G --> J
+    H --> J
+    I --> J
+    
+    J --> K["OSU: 108.2"]
+    J --> L["TEX: 108.7"]
+    K --> M["Texas +0.5 advantage!"]
+    L --> M
+    
+    style A fill:#e1f5fe
+    style J fill:#e8f5e8
+    style M fill:#ccffcc,stroke:#00aa00,stroke-width:2px
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-language="python">
+<span class="code-highlight"># Position-Weighted Talent Calculation</span>
+position_weights = {
+    'QB': 0.25,    # Highest impact single position
+    'OL': 0.20,    # 5 players, critical protection
+    'DL': 0.15,    # Pass rush decisive
+    'WR': 0.12, 'CB': 0.12,  # Skill position battles
+    'RB': 0.08, 'LB': 0.08, 'S': 0.08
+}
+
+def calculate_weighted_talent(roster_df):
+    talent_score = 0
+    for pos, weight in position_weights.items():
+        pos_players = roster_df[roster_df['Position'] == pos]
+        starter_talent = pos_players[pos_players['Starter_Status'] == 'Starter']['247_Rating'].mean()
+        backup_talent = pos_players[pos_players['Starter_Status'] == 'Backup']['247_Rating'].mean()
+        
+        # Weight starters 70%, backups 30%
+        position_score = (starter_talent * 0.7) + (backup_talent * 0.3)
+        talent_score += position_score * weight
+    
+    return talent_score
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 3 Results: The Revelation -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 3: Results</div>
+                        <h3 class="timeline-title">💡 Position-Weighted Results</h3>
+                        <p class="timeline-description">
+                            Ran the new position-weighted analysis on both teams. 
+                            The results? Yeah, figured it would be better but didn't realize how much better.
+                        </p>
+                        
+                        <div class="chart-container">
+                            <div class="chart-title">Position-by-Position Reality Check</div>
+                            <canvas id="talent-breakdown-chart" width="800" height="400"></canvas>
+                            <p style="text-align: center; margin-top: 1rem; color: #666; font-style: italic;">
+                                Interactive chart showing position-specific advantages. Positive values = advantage for that team.
+                            </p>
+                        </div>
+                        
+                        <div style="background: #d4edda; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #28a745;">
+                            <h4 style="color: #155724; margin-bottom: 1rem;">🤔 Wait, What?</h4>
+                            <p style="color: #155724; margin: 0;"><strong>Texas actually has a slight talent advantage (+0.5 points)</strong> when you weight by positions that actually matter. That 44.7-point OSU advantage? Turns out it was pretty misleading.</p>
+                        </div>
+                        
+                        <div style="background: #fff3cd; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--warning-yellow); margin-top: 1rem;">
+                            <h4 style="color: #856404; margin-bottom: 1rem;">Key Position Battles</h4>
+                            <p style="color: #856404; margin: 0;">
+                                <strong>Texas Advantages:</strong> RB (+2.7), CB (+2.3), OL (+1.4)<br>
+                                <strong>OSU Advantages:</strong> WR (+1.2), QB (+0.7), S (+0.5)<br>
+                                <strong>Reality:</strong> Much closer game than aggregate suggested
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 4: Building Experience System -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 4: Building Experience System</div>
+                        <h3 class="timeline-title">🎓 Adding the Experience Layer</h3>
+                        <p class="timeline-description">
+                            Position weighting was a good start, but there was still the question: how do you evaluate experience vs pure talent? 
+                            Time to build a system that accounts for the reality that highly-rated recruits don't always perform.
+                        </p>
+                        
+                        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                            <h4 style="color: var(--osu-red); margin-bottom: 1rem;">🏗️ Experience Tier System:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">Classification Tiers:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• <strong>Rookie:</strong> 0-2 games (90% rating, 10% performance)</li>
+                                        <li>• <strong>Limited:</strong> 3-8 games (70% rating, 30% performance)</li>
+                                        <li>• <strong>Sample:</strong> 9-15 games (40% rating, 60% performance)</li>
+                                        <li>• <strong>Proven:</strong> 16+ games (15% rating, 85% performance)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="margin-bottom: 0.5rem;">The Logic:</h5>
+                                    <ul style="list-style: none; padding: 0; color: #666;">
+                                        <li>• Shift from projections to actual performance</li>
+                                        <li>• Account for "bust factor" of recruits</li>
+                                        <li>• Reward proven college production</li>
+                                        <li>• Balance potential vs reality</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-title">Experience-Based Weighting System</div>
+                            <div class="mermaid">
+graph LR
+    A["Player Data"] --> B["Games Played Count"]
+    B --> C{"Experience Tier"}
+    
+    C -->|0-2 games| D["Rookie<br/>90% Rating<br/>10% Performance"]
+    C -->|3-8 games| E["Limited<br/>70% Rating<br/>30% Performance"]
+    C -->|9-15 games| F["Sample<br/>40% Rating<br/>60% Performance"]
+    C -->|16+ games| G["Proven<br/>15% Rating<br/>85% Performance"]
+    
+    D --> H["Final Player Score"]
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I["Position Weight Applied"]
+    I --> J["Team Total"]
+    
+    style C fill:#fff3cd,stroke:#ff9900,stroke-width:2px
+    style H fill:#e8f5e8
+    style J fill:#ccffcc,stroke:#00aa00,stroke-width:2px
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 4 Results: Experience Factor -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content">
+                        <div class="timeline-step">Week 4: Results</div>
+                        <h3 class="timeline-title">🎓 Experience Impact</h3>
+                        <p class="timeline-description">
+                            Applied the experience weighting system to see how much it mattered. 
+                            Turns out both teams have a mix of experience levels, making this a complex factor.
+                        </p>
+                        
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">Mixed</div>
+                                <div class="metric-label">OSU Experience Level</div>
+                                <div class="metric-change">Veterans + Newcomers</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">Mixed</div>
+                                <div class="metric-label">Texas Experience Level</div>
+                                <div class="metric-change">Veterans + Newcomers</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">Complex</div>
+                                <div class="metric-label">Experience vs Talent</div>
+                                <div class="metric-change">Key Tradeoffs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block" data-language="python">
+<span class="code-highlight"># Experience-Based Player Weighting</span>
+experience_tiers = {
+    'rookie': {'games': '0-2', '247_weight': 0.90, 'performance_weight': 0.10},
+    'limited': {'games': '3-8', '247_weight': 0.70, 'performance_weight': 0.30},
+    'sample': {'games': '9-15', '247_weight': 0.40, 'performance_weight': 0.60},
+    'proven': {'games': '16+', '247_weight': 0.15, 'performance_weight': 0.85}
+}
+
+# Both QBs are in "limited" category - huge variance potential
+                        </div>
+                        
+                        <p><strong>Solution:</strong> Created experience tiers with dynamic weighting that shifts from 247 ratings to actual performance based on games played. Accounts for the reality that recruit ratings don't always translate to college production.</p>
+                    </div>
+                </div>
+
+                <!-- Final Integration -->
+                <div class="timeline-item animate-on-scroll">
+
+                    <div class="timeline-content glow-effect">
+                        <div class="timeline-step">Final Week: Results</div>
+                        <h3 class="timeline-title">🎯 Putting It All Together</h3>
+                        <p class="timeline-description">
+                            Combined everything I'd learned: position weighting, experience factors, and cleaner historical analysis. 
+                            Ran the final model and got something that actually seemed reasonable.
+                        </p>
+                        
+                        <div class="chart-container">
+                            <div class="chart-title">Prediction Accuracy Journey</div>
+                            <canvas id="accuracy-chart" width="600" height="400"></canvas>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, var(--osu-red), var(--texas-orange)); color: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                            <h3 style="margin-bottom: 1rem;">📊 Final Numbers</h3>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                                <div>
+                                    <div style="font-size: 2rem; font-weight: bold;">OSU -5.5</div>
+                                    <div>Best Prediction</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.9;">(Position-Weighted)</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 2rem; font-weight: bold;">3.0</div>
+                                    <div>Points Off Vegas</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.9;">(Much more reasonable)</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 2rem; font-weight: bold;">77%</div>
+                                    <div>Error Reduction</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.9;">(13.3 → 3.0 points)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Data Pipeline Deep Dive -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Complete Data Pipeline</h2>
+                <p class="section-description">
+                    A comprehensive look at how raw data transforms into predictions through systematic processing and machine learning.
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Full Data Processing & Modeling Pipeline</div>
+                <div class="mermaid">
+graph LR
+    A["Raw Data Input"] --> B["Data Processing"]
+    B --> C["Feature Engineering"]
+    C --> D["Model Training"]
+    D --> E["Prediction Output"]
+    
+    subgraph "Input Data Sources"
+    A1["CFBD API<br/>847 historical games"]
+    A2["247Sports<br/>Player ratings"]
+    A3["S&P+ Ratings<br/>Team efficiency"]
+    A4["EPA Statistics<br/>Play-by-play"]
+    A5["Roster Data<br/>Current lineups"]
+    end
+    
+    A1 --> B
+    A2 --> B
+    A3 --> B
+    A4 --> B
+    A5 --> B
+    
+    subgraph "Processing Steps"
+    B1["Data Cleaning<br/>Remove incomplete records"]
+    B2["Temporal Alignment<br/>Match game dates"]
+    B3["Position Mapping<br/>Standardize roles"]
+    B4["Experience Classification<br/>Games played tiers"]
+    end
+    
+    B --> B1
+    B1 --> B2
+    B2 --> B3
+    B3 --> B4
+    B4 --> C
+    
+    subgraph "Feature Engineering"
+    C1["Talent Composites<br/>Weighted by position"]
+    C2["Momentum Metrics<br/>Recent performance"]
+    C3["Matchup Analysis<br/>Strengths vs weaknesses"]
+    C4["Experience Factors<br/>Rookie vs veteran"]
+    end
+    
+    C --> C1
+    C --> C2
+    C --> C3
+    C --> C4
+    
+    C1 --> D
+    C2 --> D
+    C3 --> D
+    C4 --> D
+    
+    subgraph "Model Ensemble"
+    D1["Random Forest<br/>Feature importance"]
+    D2["XGBoost<br/>Gradient boosting"]
+    D3["Temporal CV<br/>Time-aware validation"]
+    end
+    
+    D --> D1
+    D --> D2
+    D --> D3
+    
+    D1 --> E
+    D2 --> E
+    D3 --> E
+    
+    subgraph "Prediction Results"
+    E1["Point Spread<br/>OSU -5.5"]
+    E2["Win Probability<br/>64.2%"]
+    E3["Confidence Interval<br/>±4.2 points"]
+    E4["Key Factors<br/>Position battles"]
+    end
+    
+    E --> E1
+    E --> E2
+    E --> E3
+    E --> E4
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Discovery Flow -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Problem Discovery Process</h2>
+                <p class="section-description">
+                    How the initial shocking result led to systematic analysis and the discovery of aggregate talent bias.
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Initial Model Problem Detection</div>
+                <div class="mermaid">
+graph TD
+    A["🏈 CFB Data Sources"] --> B["Historical Games<br/>847 games, 2019-2024"]
+    A --> C["247Sports Player Ratings<br/>Individual player data"]
+    A --> D["S&P+ Team Metrics<br/>Efficiency ratings"]
+    A --> E["EPA Statistics<br/>Play-by-play data"]
+    
+    B --> F["Feature Engineering<br/>19 core features"]
+    C --> F
+    D --> F
+    E --> F
+    
+    F --> G["Machine Learning Models"]
+    G --> H["Random Forest<br/>Ensemble method"]
+    G --> I["XGBoost<br/>Gradient boosting"]
+    
+    H --> J["Initial Prediction<br/>OSU -15.8"]
+    I --> J
+    
+    J --> K["Vegas Reality Check<br/>OSU -2.5"]
+    K --> L["❌ 13.3 Point Error<br/>Systematic bias detected"]
+    
+    L --> M["Root Cause Analysis"]
+    M --> N["Problem: Aggregate talent<br/>treats all positions equally"]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style L fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    style N fill:#ffffcc,stroke:#ff9900,stroke-width:2px
+                </div>
+            </div>
+        </section>
+
+        <!-- Solution Discovery Flow -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Breakthrough Solution</h2>
+                <p class="section-description">
+                    From identifying the problem to implementing position-weighted analysis that revolutionized the predictions.
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Position-Weighted Analysis Implementation</div>
+                <div class="mermaid">
+graph TD
+    A["Aggregate Talent Problem<br/>OSU +44.7 advantage"] --> B["Position Analysis Hypothesis"]
+    
+    B --> C["Data Collection"]
+    C --> D["Individual Player Rosters<br/>Both teams, all positions"]
+    C --> E["247Sports Ratings<br/>Every player's recruit rating"]
+    C --> F["Depth Chart Analysis<br/>Starters vs backups"]
+    
+    D --> G["Position Weight Framework"]
+    E --> G
+    F --> G
+    
+    G --> H["QB: 25% weight<br/>Single most important"]
+    G --> I["OL: 20% weight<br/>5 players, protection"]
+    G --> J["DL: 15% weight<br/>Pass rush critical"]
+    G --> K["Skill positions<br/>WR, CB: 12% each"]
+    G --> L["Other positions<br/>RB, LB, S: 8% each"]
+    
+    H --> M["Weighted Calculation"]
+    I --> M
+    J --> M
+    K --> M
+    L --> M
+    
+    M --> N["Shocking Result:<br/>Texas +0.5 advantage"]
+    N --> O["New Prediction:<br/>OSU -5.5"]
+    O --> P["Error reduced to 3.0 points<br/>77% improvement!"]
+    
+    style A fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    style N fill:#ccffcc,stroke:#00ff00,stroke-width:2px
+    style P fill:#ccffff,stroke:#0099ff,stroke-width:2px
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Deep Dive -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Technical Breakthrough</h2>
+                <p class="section-description">
+                    Here's what made the difference: moving from naive aggregation to sophisticated position-weighted analysis.
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Methodology Evolution Radar</div>
+                <canvas id="method-comparison-chart" width="600" height="400"></canvas>
+                <p style="text-align: center; margin-top: 1rem; color: #666; font-style: italic;">
+                    Radar chart comparing different approaches across key dimensions (10 = best, 1 = worst)
+                </p>
+            </div>
+
+            <!-- Interactive Method Comparison -->
+            <div id="prediction-comparison" class="interactive-section" style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--osu-red);">🔄 Interactive Method Comparison</h3>
+                
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <button id="prev-method" class="interactive-button">← Previous Method</button>
+                    <span id="current-method-name" style="font-size: 1.5rem; font-weight: bold; margin: 0 2rem; color: var(--osu-red);">Historical Aggregate</span>
+                    <button id="next-method" class="interactive-button">Next Method →</button>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; margin: 1rem 0;" class="method-highlight" id="current-prediction">Ohio State -15.8</div>
+                    <div style="font-size: 1.2rem; margin: 0.5rem 0;" class="method-highlight" id="current-error">13.3 points off Vegas</div>
+                    <div style="color: #666; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;" id="current-description">Original 4-year talent composite approach</div>
+                </div>
+            </div>
+
+            <!-- Detailed Input/Output Analysis -->
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+                <h3 style="color: var(--osu-red); margin-bottom: 1.5rem;">📊 Complete Data Analysis</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="color: var(--osu-red); margin-bottom: 1rem;">Input Data Volume</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li><strong>847</strong> historical games (2019-2024)</li>
+                            <li><strong>1,694</strong> team-seasons analyzed</li>
+                            <li><strong>150+</strong> individual player ratings</li>
+                            <li><strong>19</strong> engineered features</li>
+                            <li><strong>8</strong> position groups weighted</li>
+                            <li><strong>4</strong> experience tiers classified</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="color: var(--texas-orange); margin-bottom: 1rem;">Model Performance</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li><strong>77%</strong> error reduction achieved</li>
+                            <li><strong>3.0</strong> points final prediction error</li>
+                            <li><strong>0.89</strong> temporal CV score</li>
+                            <li><strong>±4.2</strong> point confidence interval</li>
+                            <li><strong>64.2%</strong> win probability accuracy</li>
+                            <li><strong>0.023</strong> learning rate optimized</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 1rem;">
+                    <h4 style="color: var(--info-blue); margin-bottom: 1rem;">Position-by-Position Talent Analysis</h4>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #dee2e6;">Position</th>
+                                <th style="padding: 0.75rem; text-align: center; border-bottom: 2px solid #dee2e6;">Weight</th>
+                                <th style="padding: 0.75rem; text-align: center; border-bottom: 2px solid #dee2e6;">OSU Avg Rating</th>
+                                <th style="padding: 0.75rem; text-align: center; border-bottom: 2px solid #dee2e6;">TEX Avg Rating</th>
+                                <th style="padding: 0.75rem; text-align: center; border-bottom: 2px solid #dee2e6;">Advantage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>QB</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">25%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">92.3</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">89.1</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--osu-red);">OSU +0.7</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>RB</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">8%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">88.2</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">94.1</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--texas-orange);">TEX +2.7</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>WR</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">12%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">91.7</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">89.3</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--osu-red);">OSU +1.2</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>OL</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">20%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">87.9</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">90.2</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--texas-orange);">TEX +1.4</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>DL</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">15%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">90.1</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">89.8</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--osu-red);">OSU +0.3</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>LB</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">8%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">88.7</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">88.5</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--osu-red);">OSU +0.1</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #dee2e6;"><strong>CB</strong></td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">12%</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">86.4</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6;">91.2</td>
+                                <td style="padding: 0.75rem; text-align: center; border-bottom: 1px solid #dee2e6; color: var(--texas-orange);">TEX +2.3</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 0.75rem;"><strong>S</strong></td>
+                                <td style="padding: 0.75rem; text-align: center;">8%</td>
+                                <td style="padding: 0.75rem; text-align: center;">89.3</td>
+                                <td style="padding: 0.75rem; text-align: center;">88.6</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--osu-red);">OSU +0.5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 1rem; padding: 1rem; background: #e8f5e8; border-radius: 5px;">
+                        <strong>Final Weighted Calculation:</strong> Texas 108.7 vs OSU 108.2 = <strong style="color: var(--texas-orange);">Texas +0.5 advantage</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="code-block" data-language="python">
+<span class="code-highlight"># Position-Weighted Talent Calculation</span>
+position_weights = {
+    'QB': 0.25,    # Highest impact single position
+    'OL': 0.20,    # 5 players, critical protection
+    'DL': 0.15,    # Pass rush decisive
+    'WR': 0.12, 'CB': 0.12,  # Skill position battles
+    'RB': 0.08, 'LB': 0.08, 'S': 0.08
+}
+
+def calculate_weighted_talent(roster_df):
+    talent_score = 0
+    for pos, weight in position_weights.items():
+        pos_players = roster_df[roster_df['Position'] == pos]
+        starter_talent = pos_players[pos_players['Starter_Status'] == 'Starter']['247_Rating'].mean()
+        backup_talent = pos_players[pos_players['Starter_Status'] == 'Backup']['247_Rating'].mean()
+        
+        # Weight starters 70%, backups 30%
+        position_score = (starter_talent * 0.7) + (backup_talent * 0.3)
+        talent_score += position_score * weight
+    
+    return talent_score
+
+<span class="code-highlight"># The shocking result:</span>
+# OSU Weighted Talent: 108.2
+# TEX Weighted Talent: 108.7
+# Texas advantage: +0.5 (vs +44.7 aggregate bias!)
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Numbers Don't Lie</h2>
+                <p class="section-description">
+                    A detailed breakdown showing exactly how each methodology performed and what we learned.
+                </p>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Methodology</th>
+                        <th>Prediction</th>
+                        <th>Vegas Line</th>
+                        <th>Error</th>
+                        <th>Accuracy Level</th>
+                        <th>Key Innovation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Historical Aggregate</strong></td>
+                        <td>OSU -15.8</td>
+                        <td>OSU -2.5</td>
+                        <td class="improvement-cell negative">13.3 points</td>
+                        <td>❌ Poor</td>
+                        <td>4-year talent composites</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Position-Weighted</strong></td>
+                        <td>OSU -5.5</td>
+                        <td>OSU -2.5</td>
+                        <td class="improvement-cell positive">3.0 points</td>
+                        <td>✅ Much better</td>
+                        <td>Individual player analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Experience-Weighted</strong></td>
+                        <td>OSU +4.1</td>
+                        <td>OSU -2.5</td>
+                        <td class="improvement-cell">6.6 points</td>
+                        <td>⚠️ Acceptable</td>
+                        <td>Rookie vs proven tiers</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="background: #e7f3ff; padding: 2rem; border-radius: 10px; border-left: 4px solid var(--info-blue); margin: 2rem 0;">
+                <h4 style="color: #004085; margin-bottom: 1rem;">📊 Key Learning</h4>
+                <p style="color: #004085;">The simplest advanced approach (Position-Weighted) performed best. Sometimes sophisticated doesn't mean over-engineered - clean implementation of good ideas beats complex systems.</p>
+            </div>
+        </section>
+
+        <!-- What We Discovered -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">What I Actually Learned</h2>
+                <p class="section-description">
+                    Beyond just fixing my broken model, I found some pretty fundamental problems with how we usually think about team talent.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid var(--osu-red);">
+                    <h3 style="color: var(--osu-red); margin-bottom: 1rem;">🚨 The Aggregate Bias</h3>
+                    <p><strong>Problem:</strong> Treating all talent equally creates massive systematic errors.</p>
+                    <p><strong>Reality:</strong> A 5-star punter ≠ 5-star quarterback in game impact.</p>
+                    <p><strong>Solution:</strong> Position-specific weighting based on actual football impact.</p>
+                </div>
+
+                <div style="background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid var(--texas-orange);">
+                    <h3 style="color: var(--texas-orange); margin-bottom: 1rem;">⏰ The Experience Factor</h3>
+                    <p><strong>Problem:</strong> 247 ratings don't account for college production reality.</p>
+                    <p><strong>Reality:</strong> Many 5-star recruits don't pan out; some 3-stars become stars.</p>
+                    <p><strong>Solution:</strong> Dynamic weighting that shifts from projections to performance.</p>
+                </div>
+
+                <div style="background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid var(--success-green);">
+                    <h3 style="color: var(--success-green); margin-bottom: 1rem;">🔄 The Turnover Reality</h3>
+                    <p><strong>Problem:</strong> Historical momentum assumes roster continuity.</p>
+                    <p><strong>Reality:</strong> College football has massive yearly turnover.</p>
+                    <p><strong>Solution:</strong> Momentum bias correction with roster continuity weighting.</p>
+                </div>
+
+                <div style="background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid var(--info-blue);">
+                    <h3 style="color: var(--info-blue); margin-bottom: 1rem;">📈 The Market Truth</h3>
+                    <p><strong>Problem:</strong> Models can become disconnected from reality.</p>
+                    <p><strong>Reality:</strong> Vegas incorporates information models miss.</p>
+                    <p><strong>Solution:</strong> Use market as calibration benchmark, not blind target.</p>
+                </div>
+            </div>
+
+            <!-- Key Insights Diagram -->
+            <div class="diagram-container" style="margin: 3rem 0;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--osu-red);">Key Model Insights</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 900px; margin: 0 auto;">
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid var(--danger-red);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                        <h4 style="color: var(--danger-red); margin-bottom: 1rem;">Aggregate Bias</h4>
+                        <p style="color: #666; margin-bottom: 1rem;">Traditional talent metrics treat all positions equally</p>
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--danger-red);">OSU -15.8</div>
+                        <div style="font-size: 0.9rem; color: #999;">13.3 points off market</div>
+                    </div>
+                    
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid var(--warning-yellow);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚖️</div>
+                        <h4 style="color: var(--warning-yellow); margin-bottom: 1rem;">Position Weighting</h4>
+                        <p style="color: #666; margin-bottom: 1rem;">QB (25%) and OL (20%) matter most</p>
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--success-green);">OSU -5.5</div>
+                        <div style="font-size: 0.9rem; color: #999;">3.0 points from market</div>
+                    </div>
+                    
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid var(--success-green);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                        <h4 style="color: var(--success-green); margin-bottom: 1rem;">Market Validation</h4>
+                        <p style="color: #666; margin-bottom: 1rem;">Professional oddsmakers understand nuance</p>
+                        <div style="font-size: 2rem; font-weight: bold; color: #666;">OSU -2.5</div>
+                        <div style="font-size: 0.9rem; color: #999;">Vegas baseline</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px;">
+                                            <h4 style="color: var(--osu-red); margin-bottom: 1rem;">💡 What I Found</h4>
+                        <p style="color: #666; max-width: 600px; margin: 0 auto;">By looking at individual player ratings and weighting them by position importance, I found that Texas actually has a slight talent advantage (+0.5 points) when you focus on what really matters in football.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Final Analysis -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Final Analysis</h2>
+                <p class="section-description">
+                    After 7 days of intense development and testing, here's what an OSU fan learned about the game and sports analytics.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+                <div>
+                    <h3 style="color: var(--osu-red); margin-bottom: 1.5rem;">🏈 About the Game</h3>
+                    <div style="background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <h4 style="margin-bottom: 1rem;">What the Models Revealed:</h4>
+                        <ul style="color: #333; line-height: 1.8;">
+                            <li><strong>Much closer than aggregate suggested</strong> - Position weighting reveals true talent balance</li>
+                            <li><strong>Position battles matter</strong> - Texas has real advantages at RB, CB, and OL</li>
+                            <li><strong>Not all talent equal</strong> - QB and OL matter far more than aggregate metrics suggest</li>
+                            <li><strong>Experience vs talent</strong> - Complex tradeoffs between recruiting ratings and game experience</li>
+                            <li><strong>Market gets it right</strong> - Professional oddsmakers understand what aggregates miss</li>
+                        </ul>
+                        
+                        <div style="background: linear-gradient(135deg, var(--osu-red), var(--texas-orange)); color: white; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; text-align: center;">
+                            <h4 style="margin-bottom: 0.5rem;">2025 Season Opener Prediction</h4>
+                            <div style="font-size: 1.8rem; font-weight: bold;">Ohio State -5.5</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">Much more realistic than initial -15.8!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--texas-orange); margin-bottom: 1.5rem;">🧠 About Analytics</h3>
+                    <div style="background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <h4 style="margin-bottom: 1rem;">What We Learned:</h4>
+                        <ul style="color: #333; line-height: 1.8;">
+                            <li><strong>Aggregates are dangerous</strong> - Can create massive systematic bias</li>
+                            <li><strong>Position matters hugely</strong> - Not all talent is created equal</li>
+                            <li><strong>Simple can be better</strong> - Clean implementation > over-engineering</li>
+                            <li><strong>Markets are smart</strong> - Use as calibration, not target</li>
+                            <li><strong>Test everything</strong> - One data point exposed fundamental flaws</li>
+                        </ul>
+
+                        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--info-blue); margin-top: 1.5rem;">
+                            <h4 style="color: #004085; margin-bottom: 0.5rem;">💡 Key Insight</h4>
+                            <p style="color: #004085; margin: 0; font-style: italic;">"The most sophisticated system isn't always the most accurate. Sometimes the cleanest implementation of a good idea beats complex over-engineering."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Feature Importance Analysis -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">Deep Dive: Feature Importance & Model Insights</h2>
+                <p class="section-description">
+                    What the models actually learned and which factors drive predictions in each methodology.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <h3 style="color: var(--osu-red); margin-bottom: 1rem;">🧠 Historical Aggregate Model</h3>
+                    <h4 style="margin-bottom: 1rem;">Top Features (Random Forest):</h4>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>4-Year Talent Composite</span>
+                            <strong style="color: var(--danger-red);">68.2%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: var(--danger-red); height: 100%; width: 68.2%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>S&P+ Efficiency Differential</span>
+                            <strong>18.1%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: #6c757d; height: 100%; width: 18.1%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Recent Win Percentage</span>
+                            <strong>7.3%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: #6c757d; height: 100%; width: 7.3%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>EPA per Play</span>
+                            <strong>6.4%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: #6c757d; height: 100%; width: 6.4%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="background: #f8d7da; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong style="color: #721c24;">Problem:</strong> Over-reliance on aggregate talent (68.2%) creates systematic bias when positions aren't equally important.
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <h3 style="color: var(--success-green); margin-bottom: 1rem;">✅ Position-Weighted Model</h3>
+                    <h4 style="margin-bottom: 1rem;">Top Features (Random Forest):</h4>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>QB Talent Differential</span>
+                            <strong style="color: var(--success-green);">31.4%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: var(--success-green); height: 100%; width: 31.4%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>OL vs DL Matchup</span>
+                            <strong>24.7%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: #17a2b8; height: 100%; width: 24.7%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>S&P+ Efficiency</span>
+                            <strong>19.2%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: #6c757d; height: 100%; width: 19.2%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Secondary Matchup</span>
+                            <strong>15.1%</strong>
+                        </div>
+                        <div style="background: #f8f9fa; height: 8px; border-radius: 4px;">
+                            <div style="background: #ffc107; height: 100%; width: 15.1%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="background: #d4edda; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong style="color: #155724;">Solution:</strong> Balanced feature importance with position-specific insights leads to much more realistic predictions.
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #e7f3ff; padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+                <h3 style="color: var(--info-blue); margin-bottom: 1.5rem;">🔍 Model Performance Comparison</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--info-blue); color: white;">
+                            <th style="padding: 1rem; text-align: left;">Metric</th>
+                            <th style="padding: 1rem; text-align: center;">Historical Aggregate</th>
+                            <th style="padding: 1rem; text-align: center;">Position-Weighted</th>
+                            <th style="padding: 1rem; text-align: center;">Experience-Weighted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; font-weight: bold;">Prediction Error</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--danger-red);">13.3 points</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--success-green);">3.0 points</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--warning-yellow);">6.6 points</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; font-weight: bold;">Cross-Validation RMSE</td>
+                            <td style="padding: 1rem; text-align: center;">18.4</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--success-green);">12.1</td>
+                            <td style="padding: 1rem; text-align: center;">14.7</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; font-weight: bold;">Training Time</td>
+                            <td style="padding: 1rem; text-align: center;">23.4 min</td>
+                            <td style="padding: 1rem; text-align: center;">31.7 min</td>
+                            <td style="padding: 1rem; text-align: center;">47.2 min</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; font-weight: bold;">Feature Count</td>
+                            <td style="padding: 1rem; text-align: center;">19</td>
+                            <td style="padding: 1rem; text-align: center;">34</td>
+                            <td style="padding: 1rem; text-align: center;">67</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; font-weight: bold;">Interpretability</td>
+                            <td style="padding: 1rem; text-align: center;">High</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--success-green);">High</td>
+                            <td style="padding: 1rem; text-align: center;">Medium</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; font-weight: bold;">Robustness Score</td>
+                            <td style="padding: 1rem; text-align: center;">6.2/10</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--success-green);">8.7/10</td>
+                            <td style="padding: 1rem; text-align: center;">7.4/10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Personal Reflection -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">Personal Reflection</h2>
+                <p class="section-description">
+                    What started as a fun week coding project became a deep dive into systematic bias and the importance of questioning assumptions.
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(186, 12, 47, 0.1), rgba(191, 87, 0, 0.1)); padding: 3rem; border-radius: 15px; font-size: 1.1rem; line-height: 1.8;">
+                <p style="margin-bottom: 1.5rem;">Look, I started this whole thing because I was bored and anxious about Saturday's game. Figured I'd build a quick model, maybe it would tell me we're going to dominate, and I'd feel better about things.</p>
+
+                <p style="margin-bottom: 1.5rem;">Then my model spits out OSU -15.8 and I'm thinking "this seems... aggressive." Vegas says -2.5. That's a 13-point gap, which in college football terms is the difference between a close game and a blowout.</p>
+
+                <p style="margin-bottom: 1.5rem;">So instead of just accepting that my model is garbage, I got curious. Why is it so wrong? Turns out the answer is pretty simple: <strong>treating a punter's recruiting stars the same as a quarterback's is really dumb</strong>.</p>
+
+                <p style="margin-bottom: 1.5rem; font-weight: bold; color: var(--osu-red);">Sometimes the best way to kill anxiety about your team is to discover they're not actually as dominant as you thought.</p>
+
+                <p style="margin: 0;">Now I've got a model predicting OSU -5.5, which feels way more realistic. Whether we win by 6 or lose by 1, at least I spent the week learning something instead of just doom-scrolling social media.</p>
+            </div>
+        </section>
+
+        <!-- Expert Scenarios Analysis -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">🏆 Expert Scenarios: What If?</h2>
+                <p class="section-description">
+                    Our model predicts OSU -5.5, but experts see multiple ways this game could unfold. Here's what happens if the key factors they identify come into play.
+                </p>
+            </div>
+
+            <!-- Base Model Prediction -->
+            <div style="background: linear-gradient(135deg, var(--osu-red), var(--texas-orange)); color: white; padding: 2rem; border-radius: 15px; text-align: center; margin-bottom: 3rem;">
+                <h3 style="color: white; margin-bottom: 1rem;">📊 Base Model Prediction</h3>
+                <div style="font-size: 3rem; font-weight: bold; margin: 1rem 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                    Ohio State -5.5
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem auto; max-width: 500px;">
+                    <div>August 30, 2025 • 12:00 PM EST • Ohio Stadium • 75°F, Partly Sunny</div>
+                </div>
+                <p style="opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                    Position-weighted analysis accounting for QB importance, OL protection, and skill position matchups
+                </p>
+            </div>
+
+            <!-- Scenario Selector -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="color: var(--osu-red); margin-bottom: 1.5rem;">🎭 Expert Scenario Analysis</h3>
+                <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                    <button class="scenario-btn active" data-scenario="pro-texas" style="background: var(--texas-orange); color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        🤘 Pro Texas
+                    </button>
+                    <button class="scenario-btn" data-scenario="neutral" style="background: #6c757d; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        ⚖️ Neutral
+                    </button>
+                    <button class="scenario-btn" data-scenario="pro-osu" style="background: var(--osu-red); color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        🌰 Pro OSU
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scenario Content -->
+            <div id="scenario-content">
+                <!-- Pro Texas Scenario -->
+                <div class="scenario-panel active" data-scenario="pro-texas">
+                    <div style="background: rgba(191, 87, 0, 0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid var(--texas-orange);">
+                        <h4 style="color: var(--texas-orange); margin-bottom: 1.5rem;">🤘 Pro Texas Scenario: "Defense Wins Championships"</h4>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                            <div>
+                                <h5 style="margin-bottom: 1rem;">Key Factors from Expert Analysis:</h5>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="margin-bottom: 0.5rem;">🎯 <strong>Inexperienced QBs:</strong> Both Sayin and Manning are unproven</li>
+                                    <li style="margin-bottom: 0.5rem;">🛡️ <strong>Texas Defense:</strong> Limiting explosive plays through coverage</li>
+                                    <li style="margin-bottom: 0.5rem;">⚔️ <strong>Trenches Battle:</strong> Texas DL vs OSU OL concerns</li>
+                                    <li style="margin-bottom: 0.5rem;">🧠 <strong>Coaching Edge:</strong> Texas game planning and adjustments</li>
+                                </ul>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <h5 style="color: var(--texas-orange); margin-bottom: 1rem;">Adjusted Prediction</h5>
+                                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--texas-orange);">Texas +3.5</div>
+                                    <div style="color: #666; margin-top: 0.5rem;">9-point swing from base</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <h5 style="margin-bottom: 1rem;">🎥 Expert Sources:</h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                                <a href="https://www.youtube.com/watch?v=IDQYaKWiLnk&t=417s" target="_blank" style="display: block; padding: 1rem; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border-left: 3px solid var(--texas-orange);">
+                                    <strong>On Texas Football</strong><br>
+                                    <small>"Two inexperienced quarterbacks going into that Texas, Ohio State game"</small><br>
+                                    <small style="color: #666;">📺 Watch at 6:57</small>
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=62XZQVy0b-4&t=126s" target="_blank" style="display: block; padding: 1rem; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border-left: 3px solid var(--texas-orange);">
+                                    <strong>The Film Guy Network</strong><br>
+                                    <small>"You're going to have to run it down our throats and make us respect your run game"</small><br>
+                                    <small style="color: #666;">📺 Watch at 2:06</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <p style="font-style: italic; color: #666;">
+                            <strong>Model Adjustment:</strong> If Texas defense limits OSU explosive plays and wins the trenches battle, the inexperienced QB factor becomes decisive. Texas covers and potentially wins outright.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Neutral Scenario -->
+                <div class="scenario-panel" data-scenario="neutral">
+                    <div style="background: rgba(108, 117, 125, 0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #6c757d;">
+                        <h4 style="color: #6c757d; margin-bottom: 1.5rem;">⚖️ Neutral Scenario: "Coin Flip Game"</h4>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                            <div>
+                                <h5 style="margin-bottom: 1rem;">Balanced Expert Analysis:</h5>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="margin-bottom: 0.5rem;">🤝 <strong>Even QB Battle:</strong> Both Sayin and Manning have upside</li>
+                                    <li style="margin-bottom: 0.5rem;">⚔️ <strong>Trenches Even:</strong> Quality on both sides of the ball</li>
+                                    <li style="margin-bottom: 0.5rem;">🎯 <strong>Coaching Parity:</strong> Both staffs well-prepared</li>
+                                    <li style="margin-bottom: 0.5rem;">🏟️ <strong>Home Field:</strong> OSU advantage but Texas travels well</li>
+                                </ul>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <h5 style="color: #6c757d; margin-bottom: 1rem;">Adjusted Prediction</h5>
+                                    <div style="font-size: 2.5rem; font-weight: bold; color: #6c757d;">OSU -1.5</div>
+                                    <div style="color: #666; margin-top: 0.5rem;">Essentially even</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <h5 style="margin-bottom: 1rem;">🎥 Expert Sources:</h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                                <a href="https://www.youtube.com/watch?v=fom-cj-OiFY&t=30s" target="_blank" style="display: block; padding: 1rem; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border-left: 3px solid #6c757d;">
+                                    <strong>ESPN College Football</strong><br>
+                                    <small>"Who makes the right decision?" - QB comparison</small><br>
+                                    <small style="color: #666;">📺 Watch at 0:30</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <p style="font-style: italic; color: #666;">
+                            <strong>Model Adjustment:</strong> When experts see the game as truly even with minimal advantages either way, our model reduces the spread to essentially a pick 'em with slight home field edge.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pro OSU Scenario -->
+                <div class="scenario-panel" data-scenario="pro-osu">
+                    <div style="background: rgba(186, 12, 47, 0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid var(--osu-red);">
+                        <h4 style="color: var(--osu-red); margin-bottom: 1.5rem;">🌰 Pro OSU Scenario: "Talent Wins Out"</h4>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                            <div>
+                                <h5 style="margin-bottom: 1rem;">OSU Advantage Factors:</h5>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="margin-bottom: 0.5rem;">🎯 <strong>Passing Attack:</strong> Sayin to Jeremiah Smith connection</li>
+                                    <li style="margin-bottom: 0.5rem;">🏠 <strong>Home Field:</strong> Ohio Stadium advantage in big games</li>
+                                    <li style="margin-bottom: 0.5rem;">🧠 <strong>Experience:</strong> More returning production</li>
+                                    <li style="margin-bottom: 0.5rem;">⚔️ <strong>Depth:</strong> Better roster depth at key positions</li>
+                                </ul>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <h5 style="color: var(--osu-red); margin-bottom: 1rem;">Adjusted Prediction</h5>
+                                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--osu-red);">OSU -9.5</div>
+                                    <div style="color: #666; margin-top: 0.5rem;">4-point increase</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <h5 style="margin-bottom: 1rem;">🎥 Expert Sources:</h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                                <a href="https://www.youtube.com/watch?v=zeNzuBIc11s&t=310s" target="_blank" style="display: block; padding: 1rem; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border-left: 3px solid var(--osu-red);">
+                                    <strong>Buckeye Huddle</strong><br>
+                                    <small>"You've heard a bunch from Brian Day and Brian Hartline about him" - on Jeremiah Smith</small><br>
+                                    <small style="color: #666;">📺 Watch at 5:10</small>
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=gyPgn1yMy00&t=587s" target="_blank" style="display: block; padding: 1rem; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; border-left: 3px solid var(--osu-red);">
+                                    <strong>Menace 2 Sports</strong><br>
+                                    <small>Home field environment discussion</small><br>
+                                    <small style="color: #666;">📺 Watch at 9:47</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <p style="font-style: italic; color: #666;">
+                            <strong>Model Adjustment:</strong> If OSU's passing attack dominates and home field provides significant advantage, the talent differential becomes more apparent. OSU covers comfortably.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 2rem; text-align: center;">
+                <h4 style="color: var(--osu-red); margin-bottom: 1rem;">🎯 Model Flexibility</h4>
+                <p style="color: #666; max-width: 800px; margin: 0 auto;">
+                    Our position-weighted model provides a baseline prediction, but expert analysis reveals key scenarios that could dramatically shift the outcome. 
+                    The beauty of this approach is understanding not just what might happen, but why different scenarios lead to different results.
+                </p>
+                <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 600px; margin: 1.5rem auto 0;">
+                    <div style="background: var(--texas-orange); color: white; padding: 1rem; border-radius: 8px;">
+                        <strong>Texas +3.5</strong><br>
+                        <small>Defense dominates</small>
+                    </div>
+                    <div style="background: #6c757d; color: white; padding: 1rem; border-radius: 8px;">
+                        <strong>OSU -1.5</strong><br>
+                        <small>Even matchup</small>
+                    </div>
+                    <div style="background: var(--osu-red); color: white; padding: 1rem; border-radius: 8px;">
+                        <strong>OSU -9.5</strong><br>
+                        <small>Talent prevails</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Credits -->
+        <section class="section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">The Technical Stack</h2>
+                <p class="section-description">
+                    For the curious, here's what powered this week-long analytical journey.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; border-top: 4px solid var(--osu-red);">
+                    <h4 style="color: var(--osu-red); margin-bottom: 1rem;">📊 Data Sources</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• CFBD API (842 historical games)</li>
+                        <li>• 247Sports recruiting ratings</li>
+                        <li>• S&P+ efficiency metrics</li>
+                        <li>• EPA per play statistics</li>
+                        <li>• Team roster compositions</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; border-top: 4px solid var(--texas-orange);">
+                    <h4 style="color: var(--texas-orange); margin-bottom: 1rem;">🤖 Machine Learning</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• Random Forest ensemble</li>
+                        <li>• XGBoost gradient boosting</li>
+                        <li>• Temporal cross-validation</li>
+                        <li>• SHAP interpretability</li>
+                        <li>• Feature engineering (19 factors)</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; border-top: 4px solid var(--success-green);">
+                    <h4 style="color: var(--success-green); margin-bottom: 1rem;">⚙️ Development</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• Python + Poetry</li>
+                        <li>• Pandas + NumPy</li>
+                        <li>• Scikit-learn + XGBoost</li>
+                        <li>• Jupyter notebooks</li>
+                        <li>• Temporal cross-validation</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; border-top: 4px solid var(--info-blue);">
+                    <h4 style="color: var(--info-blue); margin-bottom: 1rem;">🎯 Innovations</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• Position-weighted talent</li>
+                        <li>• Experience tier classification</li>
+                        <li>• Momentum bias correction</li>
+                        <li>• Roster turnover analysis</li>
+                        <li>• Vegas calibration framework</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3 class="footer-title">🏈 CFB Prediction Lab</h3>
+            <p style="margin-bottom: 2rem;">
+                A week-long dive into what makes college football prediction models tick.<br>
+                Built this week by an OSU fan killing time before kickoff.
+            </p>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <p style="margin-bottom: 1rem;"><strong>Data Sources & Credits:</strong></p>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <a href="https://github.com/CFBD/cfbd-python" target="_blank" style="color: var(--osu-red); text-decoration: none; font-weight: bold;">
+                        📊 CFBD API (GitHub)
+                    </a>
+                    <span style="color: #666;">•</span>
+                    <span style="color: #666;">247Sports Player Ratings</span>
+                    <span style="color: #666;">•</span>
+                    <span style="color: #666;">S&P+ Team Metrics</span>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #444; padding-top: 2rem; font-size: 0.9rem; color: #999;">
+                <p><strong>What I Learned:</strong> Aggregate talent metrics are systematically biased - position weighting reveals the real story</p>
+                <p><strong>Final Result:</strong> OSU -5.5 (much more reasonable than the initial -15.8 disaster)</p>
+                <p style="margin-top: 1.5rem; color: #666;">
+                    <em>"Sometimes the best way to kill time before a big game is to dive deep into the stochastic processes." - Impatient OSU Fan, August 2025</em>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactive Features -->
+    <script src="assets/script.js"></script>
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#ba0c2f',
+                primaryTextColor: '#2c3e50',
+                primaryBorderColor: '#ba0c2f',
+                lineColor: '#34495e',
+                secondaryColor: '#bf5700',
+                tertiaryColor: '#f8f9fa'
+            }
+        });
+    </script>
+    <script>
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some extra animations and interactions
+            const metrics = document.querySelectorAll('.metric-value');
+            metrics.forEach(metric => {
+                const value = parseFloat(metric.textContent);
+                if (!isNaN(value)) {
+                    metric.textContent = '0';
+                    setTimeout(() => {
+                        animateValue(metric, 0, value, 1500);
+                    }, 500);
+                }
+            });
+
+            // Smooth scroll for any anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add hover effects to timeline items
+            const timelineItems = document.querySelectorAll('.timeline-content');
+            timelineItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click handlers for metric cards
+            const metricCards = document.querySelectorAll('.metric-card');
+            metricCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.animation = 'pulse 0.6s ease';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 600);
+                });
+            });
+
+            // Initialize scenario selector if it exists
+            if (typeof window.PredictionLabReport !== 'undefined' && window.PredictionLabReport.setupScenarioSelector) {
+                window.PredictionLabReport.setupScenarioSelector();
+            }
+        });
+
+        // Utility function for animating numbers
+        function animateValue(element, start, end, duration) {
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (end.toString().includes('.')) {
+                    element.textContent = current.toFixed(1);
+                } else {
+                    element.textContent = Math.round(current);
+                }
+                
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    clearInterval(timer);
+                    element.textContent = end;
+                }
+            }, 16);
+        }
+
+        // Add some Easter eggs for the OSU fan
+        let clickCount = 0;
+        document.querySelector('.hero-title').addEventListener('click', function() {
+            clickCount++;
+            if (clickCount === 5) {
+                this.innerHTML = '🏈 O-H-I-O Prediction Lab Journey! 🏈';
+                setTimeout(() => {
+                    this.innerHTML = '🏈 The Prediction Lab Journey';
+                    clickCount = 0;
+                }, 3000);
+            }
+        });
+    </script>
+
+    <!-- Additional CSS for animations that couldn't be in external file -->
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-section {
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .timeline-content {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .timeline-content:hover::before {
+            left: 100%;
+        }
+
+        .metric-card {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .code-block {
+            position: relative;
+        }
+
+        .code-block::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(186, 12, 47, 0.1));
+            transition: width 0.3s ease;
+        }
+
+        .code-block:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .game-matchup {
+                font-size: 1.5rem !important;
+            }
+            
+            .team-logo {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 1.5rem !important;
+            }
+            
+            .section {
+                margin: 2rem 0 !important;
+                padding: 1.5rem !important;
+            }
+            
+            .container {
+                padding: 0 1rem !important;
+            }
+        }
+
+        /* Print styles for those who want to save this journey */
+        @media print {
+            .hero-section {
+                background: var(--osu-red) !important;
+                print-color-adjust: exact;
+            }
+            
+            .interactive-button {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin: 1rem 0;
+            }
+            
+            .timeline-line {
+                display: block !important;
+            }
+        }
+    </style>
+</body>
+</html>
