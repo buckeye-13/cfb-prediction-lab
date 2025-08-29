@@ -271,6 +271,8 @@ body {
     font-family: 'Consolas', 'Monaco', monospace;
     overflow-x: auto;
     position: relative;
+    white-space: pre-wrap;
+    line-height: 1.5;
 }
 
 .code-block::before {
